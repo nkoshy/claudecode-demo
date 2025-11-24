@@ -2,11 +2,7 @@
   "mcpServers": {
     "k8s-mcp": {
       "type": "http",
-      "url": "https://k8smcp.k8smcp.cloud/mcp",
-      "headers": {
-        "Authorization": "Bearer ${K8S_MCP_TOKEN}",
-        "Content-Type": "application/json"
-      }
+      "url": "https://k8smcp.k8smcp.cloud/mcp"
     }
   }
 }

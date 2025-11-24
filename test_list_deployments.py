@@ -13,14 +13,6 @@ async def list_deployments(namespace: str):
     """List deployments in a namespace via the MCP server."""
 
     url = "https://k8smcp.k8smcp.cloud/mcp"
-    token = os.getenv("K8S_MCP_TOKEN")
-
-    if not token:
-        print("❌ ERROR: K8S_MCP_TOKEN environment variable is not set")
-        print("\nSet it with:")
-        print("  export K8S_MCP_TOKEN='your-token-here'")
-        sys.exit(1)
-
     client = httpx.AsyncClient(timeout=30.0)
 
     async def send_message(message: dict):
@@ -29,8 +21,7 @@ async def list_deployments(namespace: str):
             json=message,
             headers={
                 "Content-Type": "application/json",
-                "Accept": "application/json",
-                "Authorization": f"Bearer {token}"
+                "Accept": "application/json"
             }
         )
         response.raise_for_status()
