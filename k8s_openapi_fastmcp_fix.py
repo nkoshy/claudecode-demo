@@ -12,6 +12,8 @@ Usage:
       --spec apps-v1-openapi.json \
       --spec networking-v1-openapi.json \
       --output-dir fastmcp-fixed-specs
+
+  Optional: --aggressive to make all string fields nullable
 """
 
 import argparse
@@ -49,7 +51,7 @@ def is_target_path(path: str) -> bool:
     return False
 
 
-def fix_type_array_to_nullable(schema: Json, path: str = "") -> int:
+def fix_type_array_to_nullable(schema: Json, path: str = "", aggressive: bool = False) -> int:
     """
     Convert type arrays like ['string', 'null'] to type: 'string' with nullable: true.
     This is required for FastMCP compatibility.
@@ -93,30 +95,36 @@ def fix_type_array_to_nullable(schema: Json, path: str = "") -> int:
                 log(f"[FIX] {path}: unwrapped single-element type array {type_val}")
                 fixes += 1
 
+    # Aggressive mode: make all string fields nullable
+    if aggressive and "type" in schema and schema["type"] == "string" and not schema.get("nullable"):
+        schema["nullable"] = True
+        log(f"[FIX] {path}: made string field nullable (aggressive mode)")
+        fixes += 1
+
     # Recurse into common schema locations
     if "properties" in schema:
         for prop_name, prop_schema in schema["properties"].items():
             if isinstance(prop_schema, dict):
-                fixes += fix_type_array_to_nullable(prop_schema, f"{path}.{prop_name}")
+                fixes += fix_type_array_to_nullable(prop_schema, f"{path}.{prop_name}", aggressive)
 
     for key in ["items", "additionalProperties"]:
         if key in schema and isinstance(schema[key], dict):
-            fixes += fix_type_array_to_nullable(schema[key], f"{path}.{key}")
+            fixes += fix_type_array_to_nullable(schema[key], f"{path}.{key}", aggressive)
 
     if "allOf" in schema:
         for i, sub_schema in enumerate(schema["allOf"]):
             if isinstance(sub_schema, dict):
-                fixes += fix_type_array_to_nullable(sub_schema, f"{path}.allOf[{i}]")
+                fixes += fix_type_array_to_nullable(sub_schema, f"{path}.allOf[{i}]", aggressive)
 
     if "oneOf" in schema:
         for i, sub_schema in enumerate(schema["oneOf"]):
             if isinstance(sub_schema, dict):
-                fixes += fix_type_array_to_nullable(sub_schema, f"{path}.oneOf[{i}]")
+                fixes += fix_type_array_to_nullable(sub_schema, f"{path}.oneOf[{i}]", aggressive)
 
     if "anyOf" in schema:
         for i, sub_schema in enumerate(schema["anyOf"]):
             if isinstance(sub_schema, dict):
-                fixes += fix_type_array_to_nullable(sub_schema, f"{path}.anyOf[{i}]")
+                fixes += fix_type_array_to_nullable(sub_schema, f"{path}.anyOf[{i}]", aggressive)
 
     return fixes
 
@@ -148,7 +156,7 @@ def get_request_body_schema(operation: Dict[str, Any]) -> Json:
     return app_json.get("schema")
 
 
-def filter_and_fix_spec(spec: Json, spec_name: str) -> tuple[Json, int]:
+def filter_and_fix_spec(spec: Json, spec_name: str, aggressive: bool = False) -> tuple[Json, int]:
     """
     Filter spec to only target paths and apply FastMCP-compatible fixes.
     Returns (filtered_spec, fix_count)
@@ -178,7 +186,7 @@ def filter_and_fix_spec(spec: Json, spec_name: str) -> tuple[Json, int]:
     if "components" in filtered_spec and "schemas" in filtered_spec["components"]:
         log(f"  Fixing component schemas...")
         for schema_name, schema in filtered_spec["components"]["schemas"].items():
-            fixes = fix_type_array_to_nullable(schema, f"components.schemas.{schema_name}")
+            fixes = fix_type_array_to_nullable(schema, f"components.schemas.{schema_name}", aggressive)
             total_fixes += fixes
 
     # Fix inline schemas in operations
@@ -191,13 +199,13 @@ def filter_and_fix_spec(spec: Json, spec_name: str) -> tuple[Json, int]:
                 # Fix response schemas
                 resp_schema = get_response_schema(operation)
                 if resp_schema:
-                    fixes = fix_type_array_to_nullable(resp_schema, f"{path}.{method}.response")
+                    fixes = fix_type_array_to_nullable(resp_schema, f"{path}.{method}.response", aggressive)
                     total_fixes += fixes
 
                 # Fix request body schemas
                 req_schema = get_request_body_schema(operation)
                 if req_schema:
-                    fixes = fix_type_array_to_nullable(req_schema, f"{path}.{method}.requestBody")
+                    fixes = fix_type_array_to_nullable(req_schema, f"{path}.{method}.requestBody", aggressive)
                     total_fixes += fixes
 
     log(f"  Total fixes applied: {total_fixes}")
@@ -220,6 +228,11 @@ def main():
         required=True,
         help="Directory to write fixed spec JSON files.",
     )
+    parser.add_argument(
+        "--aggressive",
+        action="store_true",
+        help="Make ALL string fields nullable (recommended for K8s which can return null for any field)",
+    )
 
     args = parser.parse_args()
 
@@ -235,7 +248,7 @@ def main():
             spec = json.load(f)
 
         # Filter and fix
-        fixed_spec, fixes = filter_and_fix_spec(spec, spec_name)
+        fixed_spec, fixes = filter_and_fix_spec(spec, spec_name, args.aggressive)
         total_fixes += fixes
 
         # Write output

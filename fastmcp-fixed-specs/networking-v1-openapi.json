@@ -1156,7 +1156,8 @@
         "properties": {
           "apiGroup": {
             "description": "APIGroup is the group for the resource being referenced. If APIGroup is not specified, the specified Kind must be in the core API group. For any other third-party types, APIGroup is required.",
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "kind": {
             "description": "Kind is the type of resource being referenced",
@@ -1167,7 +1168,8 @@
           "name": {
             "description": "Name is the name of resource being referenced",
             "type": "string",
-            "default": ""
+            "default": "",
+            "nullable": true
           }
         },
         "x-kubernetes-map-type": "atomic"
@@ -1191,7 +1193,8 @@
           },
           "path": {
             "description": "path is matched against the path of an incoming request. Currently it can contain characters disallowed from the conventional \"path\" part of a URL as defined by RFC 3986. Paths must begin with a '/' and must be present when using PathType with value \"Exact\" or \"Prefix\".",
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "pathType": {
             "description": "pathType determines the interpretation of the path matching. PathType can be one of the following values: * Exact: Matches the URL path exactly. * Prefix: Matches based on a URL path prefix split by '/'. Matching is\n  done on a path element by element basis. A path element refers is the\n  list of labels in the path split by the '/' separator. A request is a\n  match for path p if every p is an element-wise prefix of p of the\n  request path. Note that if the last element of the path is a substring\n  of the last element in request path, it is not a match (e.g. /foo/bar\n  matches /foo/bar/baz, but does not match /foo/barbaz).\n* ImplementationSpecific: Interpretation of the Path matching is up to\n  the IngressClass. Implementations can treat this as a separate PathType\n  or treat it identically to Prefix or Exact path types.\nImplementations are required to support all path types.\n\nPossible enum values:\n - `\"Exact\"` matches the URL path exactly and with case sensitivity.\n - `\"ImplementationSpecific\"` matching is up to the IngressClass. Implementations can treat this as a separate PathType or treat it identically to Prefix or Exact path types.\n - `\"Prefix\"` matches based on a URL path prefix split by '/'. Matching is case sensitive and done on a path element by element basis. A path element refers to the list of labels in the path split by the '/' separator. A request is a match for path p if every p is an element-wise prefix of p of the request path. Note that if the last element of the path is a substring of the last element in request path, it is not a match (e.g. /foo/bar matches /foo/bar/baz, but does not match /foo/barbaz). If multiple matching paths exist in an Ingress spec, the longest matching path is given priority. Examples: - /foo/bar does not match requests to /foo/barbaz - /foo/bar matches request to /foo/bar and /foo/bar/baz - /foo and /foo/ both match requests to /foo and /foo/. If both paths are present in an Ingress spec, the longest matching path (/foo/) is given priority.",
@@ -1200,7 +1203,8 @@
               "Exact",
               "ImplementationSpecific",
               "Prefix"
-            ]
+            ],
+            "nullable": true
           }
         }
       },
@@ -1236,14 +1240,16 @@
           "cidr": {
             "description": "cidr is a string representing the IPBlock Valid examples are \"192.168.1.0/24\" or \"2001:db8::/64\"",
             "type": "string",
-            "default": ""
+            "default": "",
+            "nullable": true
           },
           "except": {
             "description": "except is a slice of CIDRs that should not be included within an IPBlock Valid examples are \"192.168.1.0/24\" or \"2001:db8::/64\" Except values will be rejected if they are outside the cidr range",
             "type": "array",
             "items": {
               "type": "string",
-              "default": ""
+              "default": "",
+              "nullable": true
             },
             "x-kubernetes-list-type": "atomic"
           }
@@ -1419,7 +1425,8 @@
         "properties": {
           "apiGroup": {
             "description": "apiGroup is the group for the resource being referenced. If APIGroup is not specified, the specified Kind must be in the core API group. For any other third-party types, APIGroup is required.",
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "kind": {
             "description": "kind is the type of resource being referenced.",
@@ -1430,7 +1437,8 @@
           "name": {
             "description": "name is the name of resource being referenced.",
             "type": "string",
-            "default": ""
+            "default": "",
+            "nullable": true
           },
           "namespace": {
             "description": "namespace is the namespace of the resource being referenced. This field is required when scope is set to \"Namespace\" and must be unset when scope is set to \"Cluster\".",
@@ -1439,7 +1447,8 @@
           },
           "scope": {
             "description": "scope represents if this refers to a cluster or namespace scoped resource. This may be set to \"Cluster\" (default) or \"Namespace\".",
-            "type": "string"
+            "type": "string",
+            "nullable": true
           }
         }
       },
@@ -1449,7 +1458,8 @@
         "properties": {
           "controller": {
             "description": "controller refers to the name of the controller that should handle this class. This allows for different \"flavors\" that are controlled by the same controller. For example, you may have different parameters for the same implementing controller. This should be specified as a domain-prefixed path no more than 250 characters in length, e.g. \"acme.io/ingress-controller\". This field is immutable.",
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "parameters": {
             "description": "parameters is a link to a custom resource containing additional configuration for the controller. This is optional if the controller does not require extra parameters.",
@@ -1514,11 +1524,13 @@
         "properties": {
           "hostname": {
             "description": "hostname is set for load-balancer ingress points that are DNS based.",
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "ip": {
             "description": "ip is set for load-balancer ingress points that are IP based.",
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "ports": {
             "description": "ports provides information about the ports exposed by this LoadBalancer.",
@@ -1564,7 +1576,8 @@
         "properties": {
           "error": {
             "description": "error is to record the problem with the service port The format of the error shall comply with the following rules: - built-in error values shall be specified in this file and those shall use\n  CamelCase names\n- cloud provider specific error values must have names that comply with the\n  format foo.example.com/CamelCase.",
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "port": {
             "description": "port is the port number of the ingress port.",
@@ -1580,7 +1593,8 @@
               "SCTP",
               "TCP",
               "UDP"
-            ]
+            ],
+            "nullable": true
           }
         }
       },
@@ -1590,7 +1604,8 @@
         "properties": {
           "host": {
             "description": "host is the fully qualified domain name of a network host, as defined by RFC 3986. Note the following deviations from the \"host\" part of the URI as defined in RFC 3986: 1. IPs are not allowed. Currently an IngressRuleValue can only apply to\n   the IP in the Spec of the parent Ingress.\n2. The `:` delimiter is not respected because ports are not allowed.\n\t  Currently the port of an Ingress is implicitly :80 for http and\n\t  :443 for https.\nBoth these may change in the future. Incoming requests are matched against the host before the IngressRuleValue. If the host is unspecified, the Ingress routes all traffic based on the specified IngressRuleValue.\n\nhost can be \"precise\" which is a domain name without the terminating dot of a network host (e.g. \"foo.bar.com\") or \"wildcard\", which is a domain name prefixed with a single wildcard label (e.g. \"*.foo.com\"). The wildcard character '*' must appear by itself as the first DNS label and matches only a single label. You cannot have a wildcard label by itself (e.g. Host == \"*\"). Requests will be matched against the Host field in the following way: 1. If host is precise, the request matches this rule if the http host header is equal to Host. 2. If host is a wildcard, then the request matches this rule if the http host header is to equal to the suffix (removing the first label) of the wildcard rule.",
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "http": {
             "$ref": "#/components/schemas/io.k8s.api.networking.v1.HTTPIngressRuleValue"
@@ -1607,7 +1622,8 @@
           "name": {
             "description": "name is the referenced service. The service must exist in the same namespace as the Ingress object.",
             "type": "string",
-            "default": ""
+            "default": "",
+            "nullable": true
           },
           "port": {
             "description": "port of the referenced service. A port name or port number is required for a IngressServiceBackend.",
@@ -1634,7 +1650,8 @@
           },
           "ingressClassName": {
             "description": "ingressClassName is the name of an IngressClass cluster resource. Ingress controller implementations use this field to know whether they should be serving this Ingress resource, by a transitive connection (controller -> IngressClass -> Ingress resource). Although the `kubernetes.io/ingress.class` annotation (simple constant name) was never formally defined, it was widely supported by Ingress controllers to create a direct binding between Ingress controller and Ingress resources. Newly created Ingress resources should prefer using the field. However, even though the annotation is officially deprecated, for backwards compatibility reasons, ingress controllers should still honor that annotation if present.",
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "rules": {
             "description": "rules is a list of host rules used to configure the Ingress. If unspecified, or no rule matches, all traffic is sent to the default backend.",
@@ -1688,13 +1705,15 @@
             "type": "array",
             "items": {
               "type": "string",
-              "default": ""
+              "default": "",
+              "nullable": true
             },
             "x-kubernetes-list-type": "atomic"
           },
           "secretName": {
             "description": "secretName is the name of the secret used to terminate TLS traffic on port 443. Field is left optional to allow TLS routing based on SNI hostname alone. If the SNI host in a listener conflicts with the \"Host\" header field used by an IngressRule, the SNI host is used for termination and value of the \"Host\" header is used for routing.",
-            "type": "string"
+            "type": "string",
+            "nullable": true
           }
         }
       },
@@ -1904,7 +1923,8 @@
               "SCTP",
               "TCP",
               "UDP"
-            ]
+            ],
+            "nullable": true
           }
         }
       },
@@ -1959,7 +1979,8 @@
               "enum": [
                 "Egress",
                 "Ingress"
-              ]
+              ],
+              "nullable": true
             },
             "x-kubernetes-list-type": "atomic"
           }
@@ -1971,7 +1992,8 @@
         "properties": {
           "name": {
             "description": "name is the name of the port on the Service. This is a mutually exclusive setting with \"Number\".",
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "number": {
             "description": "number is the numerical port number (e.g. 80) on the Service. This is a mutually exclusive setting with \"Name\".",
@@ -1997,13 +2019,15 @@
             "type": "array",
             "items": {
               "type": "string",
-              "default": ""
+              "default": "",
+              "nullable": true
             },
             "x-kubernetes-list-type": "atomic"
           },
           "group": {
             "description": "group is the preferred group of the resource.  Empty implies the group of the containing resource list. For subresources, this may have a different value, for example: Scale\".",
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "kind": {
             "description": "kind is the kind for the resource (e.g. 'Foo' is the kind for a resource 'foo')",
@@ -2014,7 +2038,8 @@
           "name": {
             "description": "name is the plural name of the resource.",
             "type": "string",
-            "default": ""
+            "default": "",
+            "nullable": true
           },
           "namespaced": {
             "description": "namespaced indicates if a resource is namespaced or not.",
@@ -2026,30 +2051,35 @@
             "type": "array",
             "items": {
               "type": "string",
-              "default": ""
+              "default": "",
+              "nullable": true
             },
             "x-kubernetes-list-type": "atomic"
           },
           "singularName": {
             "description": "singularName is the singular name of the resource.  This allows clients to handle plural and singular opaquely. The singularName is more correct for reporting status on a single item and both singular and plural are allowed from the kubectl CLI interface.",
             "type": "string",
-            "default": ""
+            "default": "",
+            "nullable": true
           },
           "storageVersionHash": {
             "description": "The hash value of the storage version, the version this resource is converted to when written to the data store. Value must be treated as opaque by clients. Only equality comparison on the value is valid. This is an alpha feature and may change or be removed in the future. The field is populated by the apiserver only if the StorageVersionHash feature gate is enabled. This field will remain optional even if it graduates.",
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "verbs": {
             "description": "verbs is a list of supported kube verbs (this includes get, list, watch, create, update, patch, delete, deletecollection, and proxy)",
             "type": "array",
             "items": {
               "type": "string",
-              "default": ""
+              "default": "",
+              "nullable": true
             }
           },
           "version": {
             "description": "version is the preferred version of the resource.  Empty implies the version of the containing resource list For subresources, this may have a different value, for example: v1 (while inside a v1beta1 version of the core resource's group)\".",
-            "type": "string"
+            "type": "string",
+            "nullable": true
           }
         }
       },
@@ -2069,7 +2099,8 @@
           "groupVersion": {
             "description": "groupVersion is the group and version this APIResourceList is for.",
             "type": "string",
-            "default": ""
+            "default": "",
+            "nullable": true
           },
           "kind": {
             "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
@@ -2112,7 +2143,8 @@
             "type": "array",
             "items": {
               "type": "string",
-              "default": ""
+              "default": "",
+              "nullable": true
             },
             "x-kubernetes-list-type": "atomic"
           },
@@ -2144,7 +2176,8 @@
           },
           "propagationPolicy": {
             "description": "Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground.",
-            "type": "string"
+            "type": "string",
+            "nullable": true
           }
         },
         "x-kubernetes-group-version-kind": [
@@ -2481,7 +2514,8 @@
             "type": "object",
             "additionalProperties": {
               "type": "string",
-              "default": ""
+              "default": "",
+              "nullable": true
             }
           }
         },
@@ -2498,19 +2532,22 @@
           "key": {
             "description": "key is the label key that the selector applies to.",
             "type": "string",
-            "default": ""
+            "default": "",
+            "nullable": true
           },
           "operator": {
             "description": "operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.",
             "type": "string",
-            "default": ""
+            "default": "",
+            "nullable": true
           },
           "values": {
             "description": "values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.",
             "type": "array",
             "items": {
               "type": "string",
-              "default": ""
+              "default": "",
+              "nullable": true
             },
             "x-kubernetes-list-type": "atomic"
           }
@@ -2522,7 +2559,8 @@
         "properties": {
           "continue": {
             "description": "continue may be set if the user set a limit on the number of items returned, and indicates that the server has more data available. The value is opaque and may be used to issue another request to the endpoint that served this list to retrieve the next set of available objects. Continuing a consistent list may not be possible if the server configuration has changed or more than a few minutes have passed. The resourceVersion field returned when using this continue value will be identical to the value in the first response, unless you have received this token from an error message.",
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "remainingItemCount": {
             "description": "remainingItemCount is the number of subsequent items in the list which are not included in this list response. If the list request contained label or field selectors, then the number of remaining items is unknown and the field will be left unset and omitted during serialization. If the list is complete (either because it is not chunking or because this is the last chunk), then there are no more remaining items and this field will be left unset and omitted during serialization. Servers older than v1.15 do not set this field. The intended use of the remainingItemCount is *estimating* the size of a collection. Clients should not rely on the remainingItemCount to be set or to be exact.",
@@ -2552,7 +2590,8 @@
           },
           "fieldsType": {
             "description": "FieldsType is the discriminator for the different fields format and version. There is currently only one possible value: \"FieldsV1\"",
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "fieldsV1": {
             "description": "FieldsV1 holds the first JSON version format as described in the \"FieldsV1\" type.",
@@ -2564,15 +2603,18 @@
           },
           "manager": {
             "description": "Manager is an identifier of the workflow managing these fields.",
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "operation": {
             "description": "Operation is the type of operation which lead to this ManagedFieldsEntry being created. The only valid values for this field are 'Apply' and 'Update'.",
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "subresource": {
             "description": "Subresource is the name of the subresource used to update that object, or empty string if the object was updated through the main resource. The value of this field is used to distinguish between managers, even if they share the same name. For example, a status update will be distinct from a regular update using the same manager name. Note that the APIVersion field is not related to the Subresource field and it always corresponds to the version of the main resource.",
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "time": {
             "description": "Time is the timestamp of when the ManagedFields entry was added. The timestamp will also be updated if a field is added, the manager changes any of the owned fields value or removes a field. The timestamp does not update when a field is removed from the entry because another manager took it over.",
@@ -2593,7 +2635,8 @@
             "type": "object",
             "additionalProperties": {
               "type": "string",
-              "default": ""
+              "default": "",
+              "nullable": true
             }
           },
           "creationTimestamp": {
@@ -2622,7 +2665,8 @@
             "type": "array",
             "items": {
               "type": "string",
-              "default": ""
+              "default": "",
+              "nullable": true
             },
             "x-kubernetes-list-type": "set",
             "x-kubernetes-patch-strategy": "merge"
@@ -2642,7 +2686,8 @@
             "type": "object",
             "additionalProperties": {
               "type": "string",
-              "default": ""
+              "default": "",
+              "nullable": true
             }
           },
           "managedFields": {
@@ -2660,7 +2705,8 @@
           },
           "name": {
             "description": "Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names",
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "namespace": {
             "description": "Namespace defines the space within which each name must be unique. An empty namespace is equivalent to the \"default\" namespace, but \"default\" is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty.\n\nMust be a DNS_LABEL. Cannot be updated. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces",
@@ -2708,7 +2754,8 @@
         "required": [
           "apiVersion",
           "kind",
-          "name"
+          "name",
+          "uid"
         ],
         "properties": {
           "apiVersion": {
@@ -2734,7 +2781,8 @@
           "name": {
             "description": "Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names",
             "type": "string",
-            "default": ""
+            "default": "",
+            "nullable": true
           },
           "uid": {
             "description": "UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids",
@@ -2814,7 +2862,8 @@
           },
           "status": {
             "description": "Status of the operation. One of: \"Success\" or \"Failure\". More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status",
-            "type": "string"
+            "type": "string",
+            "nullable": true
           }
         },
         "x-kubernetes-group-version-kind": [
@@ -2831,7 +2880,8 @@
         "properties": {
           "field": {
             "description": "The field of the resource that has caused this error, as named by its JSON serialization. May include dot and postfix notation for nested attributes. Arrays are zero-indexed.  Fields may appear more than once in an array of causes due to fields having multiple errors. Optional.\n\nExamples:\n  \"name\" - the field \"name\" on the current resource\n  \"items[0].name\" - the field \"name\" on the first array entry in \"items\"",
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "message": {
             "description": "A human-readable description of the cause of the error.  This field may be presented as-is to a reader.",
@@ -2864,7 +2914,8 @@
           },
           "group": {
             "description": "The group attribute of the resource associated with the status StatusReason.",
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "kind": {
             "description": "The kind attribute of the resource associated with the status StatusReason. On some operations may differ from the requested resource Kind. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
@@ -2873,7 +2924,8 @@
           },
           "name": {
             "description": "The name attribute of the resource associated with the status StatusReason (when there is a single name which can be described).",
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "retryAfterSeconds": {
             "description": "If specified, the time in seconds before the operation should be retried. Some errors may indicate the client must take an alternate action - for those errors this field may indicate how long to wait before taking the alternate action.",
@@ -2890,7 +2942,8 @@
       "io.k8s.apimachinery.pkg.apis.meta.v1.Time": {
         "description": "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.",
         "type": "string",
-        "format": "date-time"
+        "format": "date-time",
+        "nullable": true
       },
       "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent": {
         "description": "Event represents a single event to a watched resource.",
@@ -2910,7 +2963,8 @@
           },
           "type": {
             "type": "string",
-            "default": ""
+            "default": "",
+            "nullable": true
           }
         },
         "x-kubernetes-group-version-kind": [
@@ -3233,7 +3287,8 @@
             "type": "integer"
           },
           {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           }
         ]
       }
