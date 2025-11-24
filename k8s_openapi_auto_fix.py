@@ -146,7 +146,10 @@ def build_k8s_session() -> Tuple[str, requests.Session]:
             with open(sa_token_path, "r", encoding="utf-8") as f:
                 token = f.read().strip()
     if token:
+        # Strip any existing "Authorization: Bearer" or "Bearer" prefix
+        token = token.replace("Authorization: Bearer ", "").replace("Bearer ", "").strip()
         sess.headers["Authorization"] = f"Bearer {token}"
+        log(f"DEBUG: Token length: {len(token)}, first 20 chars: {token[:20]}...")
 
     # TLS verification
     ca_cert = os.getenv(
@@ -158,7 +161,8 @@ def build_k8s_session() -> Tuple[str, requests.Session]:
     else:
         sess.verify = False  # Skip SSL verification for self-signed certs
 
-    sess.headers.setdefault("Accept", "application/json")
+    sess.headers["Accept"] = "application/json"
+    sess.headers["User-Agent"] = "curl/7.68.0"  # Some clusters block python-requests
     return api_server, sess
 
 
@@ -261,6 +265,9 @@ def perform_get(
     except ValueError:
         data = None
     log(f"GET {url} -> {resp.status_code}")
+    if resp.status_code >= 400:
+        log(f"DEBUG: Response text: {resp.text[:200]}")
+        log(f"DEBUG: Request headers: {dict(sess.headers)}")
     return resp.status_code, data
 
 
