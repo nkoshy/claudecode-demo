@@ -26,6 +26,7 @@ class MCPToolTester:
         self.tools = []
         self.namespace = "devnamespace"
         self.test_results = []
+        self.session_id = None  # Track session ID from server
 
     async def send_request(self, method: str, params: dict = None):
         """Send JSON-RPC request to MCP server (SSE transport)."""
@@ -37,13 +38,18 @@ class MCPToolTester:
             "params": params or {}
         }
 
+        # Build headers with session ID if available
+        headers = {
+            "Content-Type": "application/json",
+            "Accept": "application/json, text/event-stream"
+        }
+        if self.session_id:
+            headers["mcp-session-id"] = self.session_id
+
         response = await self.client.post(
             self.url,
             json=message,
-            headers={
-                "Content-Type": "application/json",
-                "Accept": "application/json, text/event-stream"
-            }
+            headers=headers
         )
 
         # Better error handling for 4xx/5xx errors
@@ -52,6 +58,11 @@ class MCPToolTester:
             print(f"   Request: {json.dumps(message, indent=2)}")
             print(f"   Response: {response.text[:500]}")
             response.raise_for_status()
+
+        # Capture session ID from initialize response
+        if method == "initialize" and "mcp-session-id" in response.headers:
+            self.session_id = response.headers["mcp-session-id"]
+            print(f"   📌 Session ID captured: {self.session_id}")
 
         # Get response content
         response_text = response.text.strip()
@@ -104,13 +115,18 @@ class MCPToolTester:
             "params": params or {}
         }
 
+        # Build headers with session ID if available
+        headers = {
+            "Content-Type": "application/json",
+            "Accept": "application/json, text/event-stream"
+        }
+        if self.session_id:
+            headers["mcp-session-id"] = self.session_id
+
         await self.client.post(
             self.url,
             json=message,
-            headers={
-                "Content-Type": "application/json",
-                "Accept": "application/json, text/event-stream"
-            }
+            headers=headers
         )
         # Notifications don't expect a response
 
