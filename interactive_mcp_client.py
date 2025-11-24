@@ -23,6 +23,7 @@ class MCPClient:
         self.client = httpx.AsyncClient(timeout=30.0)
         self.request_id = 0
         self.tools = []
+        self.session_id = None
 
     async def send_request(self, method: str, params: dict = None):
         """Send a JSON-RPC request to the MCP server."""
@@ -34,15 +35,25 @@ class MCPClient:
             "params": params or {}
         }
 
+        # Include session ID if available
+        headers = {
+            "Content-Type": "application/json",
+            "Accept": "application/json, text/event-stream"
+        }
+        if self.session_id:
+            headers["mcp-session-id"] = self.session_id
+
         response = await self.client.post(
             self.url,
             json=message,
-            headers={
-                "Content-Type": "application/json",
-                "Accept": "application/json, text/event-stream"
-            }
+            headers=headers
         )
         response.raise_for_status()
+
+        # Capture session ID from initialize
+        if method == "initialize" and "mcp-session-id" in response.headers:
+            self.session_id = response.headers["mcp-session-id"]
+
         return response.json()
 
     async def initialize(self):
@@ -56,8 +67,28 @@ class MCPClient:
                 "version": "1.0"
             }
         })
+
+        # Send initialized notification (required by MCP protocol)
+        await self.send_notification("notifications/initialized")
         print("✅ Connected!\n")
         return response
+
+    async def send_notification(self, method: str, params: dict = None):
+        """Send a JSON-RPC notification (no response expected)."""
+        message = {
+            "jsonrpc": "2.0",
+            "method": method,
+            "params": params or {}
+        }
+
+        headers = {
+            "Content-Type": "application/json",
+            "Accept": "application/json, text/event-stream"
+        }
+        if self.session_id:
+            headers["mcp-session-id"] = self.session_id
+
+        await self.client.post(self.url, json=message, headers=headers)
 
     async def list_tools(self):
         """List all available tools."""
