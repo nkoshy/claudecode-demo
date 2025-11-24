@@ -162,7 +162,12 @@ class MCPToolTester:
         if "content" in result:
             content = result["content"][0].get("text", "")
             try:
-                return json.loads(content)
+                data = json.loads(content)
+                # FastMCP wraps K8s responses in {"result": {...}}
+                # Unwrap if present
+                if isinstance(data, dict) and "result" in data and len(data) == 1:
+                    return data["result"]
+                return data
             except:
                 return content
         return result
