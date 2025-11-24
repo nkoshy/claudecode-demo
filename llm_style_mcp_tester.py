@@ -45,7 +45,13 @@ class MCPToolTester:
                 "Accept": "application/json, text/event-stream"
             }
         )
-        response.raise_for_status()
+
+        # Better error handling for 4xx/5xx errors
+        if response.status_code >= 400:
+            print(f"\n❌ HTTP {response.status_code} Error for method: {method}")
+            print(f"   Request: {json.dumps(message, indent=2)}")
+            print(f"   Response: {response.text[:500]}")
+            response.raise_for_status()
 
         # Get response content
         response_text = response.text.strip()
@@ -90,6 +96,24 @@ class MCPToolTester:
             print(f"   Content-Type: {response.headers.get('content-type')}")
             raise
 
+    async def send_notification(self, method: str, params: dict = None):
+        """Send a JSON-RPC notification (no response expected)."""
+        message = {
+            "jsonrpc": "2.0",
+            "method": method,
+            "params": params or {}
+        }
+
+        await self.client.post(
+            self.url,
+            json=message,
+            headers={
+                "Content-Type": "application/json",
+                "Accept": "application/json, text/event-stream"
+            }
+        )
+        # Notifications don't expect a response
+
     async def initialize(self):
         """Initialize MCP session."""
         print("🔌 Initializing MCP connection...")
@@ -98,6 +122,9 @@ class MCPToolTester:
             "capabilities": {},
             "clientInfo": {"name": "llm-tester", "version": "1.0"}
         })
+
+        # Send initialized notification (required by MCP protocol)
+        await self.send_notification("notifications/initialized")
         print("✅ Connected\n")
 
     async def list_tools(self):
