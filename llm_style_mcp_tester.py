@@ -47,22 +47,48 @@ class MCPToolTester:
         )
         response.raise_for_status()
 
-        # Parse SSE response
-        # SSE format: "event: message\ndata: {...}\n\n"
+        # Get response content
         response_text = response.text.strip()
 
-        # Handle SSE stream format
+        # Debug: print first 200 chars of response
+        if not response_text:
+            print(f"⚠️  Empty response for method: {method}")
+            print(f"   Status: {response.status_code}")
+            print(f"   Headers: {dict(response.headers)}")
+            raise Exception("Empty response from server")
+
+        # Parse SSE response
+        # SSE format: "event: message\ndata: {...}\n\n"
         if response_text.startswith("event:") or "data:" in response_text:
-            # Parse SSE events
+            # Parse SSE events - handle multiple events
             lines = response_text.split('\n')
-            for i, line in enumerate(lines):
+            json_data = None
+
+            for line in lines:
+                line = line.strip()
                 if line.startswith('data:'):
                     data_json = line[5:].strip()  # Remove 'data:' prefix
                     if data_json:
-                        return json.loads(data_json)
+                        try:
+                            json_data = json.loads(data_json)
+                            # For SSE, we might get multiple events, return the last one
+                        except json.JSONDecodeError as e:
+                            print(f"⚠️  Failed to parse SSE data: {data_json[:100]}")
+                            continue
 
-        # Fallback to plain JSON
-        return response.json()
+            if json_data:
+                return json_data
+
+        # Try plain JSON
+        try:
+            return json.loads(response_text)
+        except json.JSONDecodeError:
+            # If neither SSE nor JSON, print debug info
+            print(f"❌ Failed to parse response for method: {method}")
+            print(f"   Response length: {len(response_text)}")
+            print(f"   Response start: {response_text[:200]}")
+            print(f"   Content-Type: {response.headers.get('content-type')}")
+            raise
 
     async def initialize(self):
         """Initialize MCP session."""
