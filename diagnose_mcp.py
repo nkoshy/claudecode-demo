@@ -34,6 +34,8 @@ async def diagnose():
     })
 
     print(f"   Status: {resp1.status_code}")
+    print(f"   Headers: {dict(resp1.headers)}")
+    print(f"   Cookies: {resp1.cookies}")
     print(f"   Response: {resp1.text[:300]}")
 
     # Step 2: Send initialized notification
