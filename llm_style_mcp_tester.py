@@ -280,6 +280,46 @@ class MCPToolTester:
             }
         }
 
+    def get_k8s_ingress_spec(self, name: str) -> dict:
+        """Generate a valid Kubernetes Ingress spec."""
+        return {
+            "apiVersion": "networking.k8s.io/v1",
+            "kind": "Ingress",
+            "metadata": {
+                "name": name,
+                "namespace": self.namespace,
+                "labels": {
+                    "test": "mcp-llm-tester"
+                },
+                "annotations": {
+                    "nginx.ingress.kubernetes.io/rewrite-target": "/"
+                }
+            },
+            "spec": {
+                "rules": [
+                    {
+                        "host": f"{name}.example.com",
+                        "http": {
+                            "paths": [
+                                {
+                                    "path": "/",
+                                    "pathType": "Prefix",
+                                    "backend": {
+                                        "service": {
+                                            "name": "test-service",
+                                            "port": {
+                                                "number": 80
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+
     def analyze_tool(self, tool: dict) -> dict:
         """Analyze a tool like an LLM would - understand its purpose from description."""
         name = tool["name"]
@@ -364,6 +404,8 @@ class MCPToolTester:
                     body = self.get_k8s_configmap_spec(test_name)
                 elif resource_type == "secret":
                     body = self.get_k8s_secret_spec(test_name)
+                elif resource_type == "ingress":
+                    body = self.get_k8s_ingress_spec(test_name)
                 else:
                     print(f"   ⚠️  Skipping create - no spec template for {resource_type}")
                     body = None
@@ -545,7 +587,7 @@ class MCPToolTester:
                 print(f"  • {resource}: {ops}")
 
         # Test each resource type
-        resource_types = ["deployment", "service", "configmap", "secret"]
+        resource_types = ["deployment", "service", "configmap", "secret", "ingress"]
 
         for resource_type in resource_types:
             await self.test_resource_lifecycle(resource_type, tools_by_resource)
