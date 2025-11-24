@@ -156,7 +156,7 @@ def build_k8s_session() -> Tuple[str, requests.Session]:
     if os.path.exists(ca_cert):
         sess.verify = ca_cert
     else:
-        sess.verify = True
+        sess.verify = False  # Skip SSL verification for self-signed certs
 
     sess.headers.setdefault("Accept", "application/json")
     return api_server, sess
