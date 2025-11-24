@@ -1172,7 +1172,8 @@
             "nullable": true
           }
         },
-        "x-kubernetes-map-type": "atomic"
+        "x-kubernetes-map-type": "atomic",
+        "nullable": true
       },
       "io.k8s.api.networking.v1.HTTPIngressPath": {
         "description": "HTTPIngressPath associates a path with a backend. Incoming urls matching the path are forwarded to the backend.",
@@ -1206,7 +1207,8 @@
             ],
             "nullable": true
           }
-        }
+        },
+        "nullable": true
       },
       "io.k8s.api.networking.v1.HTTPIngressRuleValue": {
         "description": "HTTPIngressRuleValue is a list of http selectors pointing to backends. In the example: http://<host>/<path>?<searchpart> -> backend where where parts of the url correspond to RFC 3986, this resource will be used to match against everything after the last '/' and before the first '?' or '#'.",
@@ -1226,9 +1228,11 @@
                 }
               ]
             },
-            "x-kubernetes-list-type": "atomic"
+            "x-kubernetes-list-type": "atomic",
+            "nullable": true
           }
-        }
+        },
+        "nullable": true
       },
       "io.k8s.api.networking.v1.IPBlock": {
         "description": "IPBlock describes a particular CIDR (Ex. \"192.168.1.0/24\",\"2001:db8::/64\") that is allowed to the pods matched by a NetworkPolicySpec's podSelector. The except entry describes CIDRs that should not be included within this rule.",
@@ -1251,9 +1255,11 @@
               "default": "",
               "nullable": true
             },
-            "x-kubernetes-list-type": "atomic"
+            "x-kubernetes-list-type": "atomic",
+            "nullable": true
           }
-        }
+        },
+        "nullable": true
       },
       "io.k8s.api.networking.v1.Ingress": {
         "description": "Ingress is a collection of rules that allow inbound connections to reach the endpoints defined by a backend. An Ingress can be configured to give services externally-reachable urls, load balance traffic, terminate SSL, offer name based virtual hosting etc.",
@@ -1303,7 +1309,8 @@
             "kind": "Ingress",
             "version": "v1"
           }
-        ]
+        ],
+        "nullable": true
       },
       "io.k8s.api.networking.v1.IngressBackend": {
         "description": "IngressBackend describes all endpoints for a given service and port.",
@@ -1325,7 +1332,8 @@
               }
             ]
           }
-        }
+        },
+        "nullable": true
       },
       "io.k8s.api.networking.v1.IngressClass": {
         "description": "IngressClass represents the class of the Ingress, referenced by the Ingress Spec. The `ingressclass.kubernetes.io/is-default-class` annotation can be used to indicate that an IngressClass should be considered default. When a single IngressClass resource has this annotation set to true, new Ingress resources without a class specified will be assigned this default class.",
@@ -1366,7 +1374,8 @@
             "kind": "IngressClass",
             "version": "v1"
           }
-        ]
+        ],
+        "nullable": true
       },
       "io.k8s.api.networking.v1.IngressClassList": {
         "description": "IngressClassList is a collection of IngressClasses.",
@@ -1390,7 +1399,8 @@
                   "$ref": "#/components/schemas/io.k8s.api.networking.v1.IngressClass"
                 }
               ]
-            }
+            },
+            "nullable": true
           },
           "kind": {
             "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
@@ -1413,7 +1423,8 @@
             "kind": "IngressClassList",
             "version": "v1"
           }
-        ]
+        ],
+        "nullable": true
       },
       "io.k8s.api.networking.v1.IngressClassParametersReference": {
         "description": "IngressClassParametersReference identifies an API object. This can be used to specify a cluster or namespace-scoped resource.",
@@ -1450,7 +1461,8 @@
             "type": "string",
             "nullable": true
           }
-        }
+        },
+        "nullable": true
       },
       "io.k8s.api.networking.v1.IngressClassSpec": {
         "description": "IngressClassSpec provides information about the class of an Ingress.",
@@ -1469,7 +1481,8 @@
               }
             ]
           }
-        }
+        },
+        "nullable": true
       },
       "io.k8s.api.networking.v1.IngressList": {
         "description": "IngressList is a collection of Ingress.",
@@ -1493,7 +1506,8 @@
                   "$ref": "#/components/schemas/io.k8s.api.networking.v1.Ingress"
                 }
               ]
-            }
+            },
+            "nullable": true
           },
           "kind": {
             "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
@@ -1516,7 +1530,8 @@
             "kind": "IngressList",
             "version": "v1"
           }
-        ]
+        ],
+        "nullable": true
       },
       "io.k8s.api.networking.v1.IngressLoadBalancerIngress": {
         "description": "IngressLoadBalancerIngress represents the status of a load-balancer ingress point.",
@@ -1543,9 +1558,11 @@
                 }
               ]
             },
-            "x-kubernetes-list-type": "atomic"
+            "x-kubernetes-list-type": "atomic",
+            "nullable": true
           }
-        }
+        },
+        "nullable": true
       },
       "io.k8s.api.networking.v1.IngressLoadBalancerStatus": {
         "description": "IngressLoadBalancerStatus represents the status of a load-balancer.",
@@ -1562,9 +1579,11 @@
                 }
               ]
             },
-            "x-kubernetes-list-type": "atomic"
+            "x-kubernetes-list-type": "atomic",
+            "nullable": true
           }
-        }
+        },
+        "nullable": true
       },
       "io.k8s.api.networking.v1.IngressPortStatus": {
         "description": "IngressPortStatus represents the error condition of a service port",
@@ -1583,7 +1602,8 @@
             "description": "port is the port number of the ingress port.",
             "type": "integer",
             "format": "int32",
-            "default": 0
+            "default": 0,
+            "nullable": true
           },
           "protocol": {
             "description": "protocol is the protocol of the ingress port. The supported values are: \"TCP\", \"UDP\", \"SCTP\"\n\nPossible enum values:\n - `\"SCTP\"` is the SCTP protocol.\n - `\"TCP\"` is the TCP protocol.\n - `\"UDP\"` is the UDP protocol.",
@@ -1596,7 +1616,8 @@
             ],
             "nullable": true
           }
-        }
+        },
+        "nullable": true
       },
       "io.k8s.api.networking.v1.IngressRule": {
         "description": "IngressRule represents the rules mapping the paths under a specified host to the related backend services. Incoming requests are first evaluated for a host match, then routed to the backend associated with the matching IngressRuleValue.",
@@ -1610,7 +1631,8 @@
           "http": {
             "$ref": "#/components/schemas/io.k8s.api.networking.v1.HTTPIngressRuleValue"
           }
-        }
+        },
+        "nullable": true
       },
       "io.k8s.api.networking.v1.IngressServiceBackend": {
         "description": "IngressServiceBackend references a Kubernetes Service as a Backend.",
@@ -1634,7 +1656,8 @@
               }
             ]
           }
-        }
+        },
+        "nullable": true
       },
       "io.k8s.api.networking.v1.IngressSpec": {
         "description": "IngressSpec describes the Ingress the user wishes to exist.",
@@ -1664,7 +1687,8 @@
                 }
               ]
             },
-            "x-kubernetes-list-type": "atomic"
+            "x-kubernetes-list-type": "atomic",
+            "nullable": true
           },
           "tls": {
             "description": "tls represents the TLS configuration. Currently the Ingress only supports a single TLS port, 443. If multiple members of this list specify different hosts, they will be multiplexed on the same port according to the hostname specified through the SNI TLS extension, if the ingress controller fulfilling the ingress supports SNI.",
@@ -1677,9 +1701,11 @@
                 }
               ]
             },
-            "x-kubernetes-list-type": "atomic"
+            "x-kubernetes-list-type": "atomic",
+            "nullable": true
           }
-        }
+        },
+        "nullable": true
       },
       "io.k8s.api.networking.v1.IngressStatus": {
         "description": "IngressStatus describe the current state of the Ingress.",
@@ -1694,7 +1720,8 @@
               }
             ]
           }
-        }
+        },
+        "nullable": true
       },
       "io.k8s.api.networking.v1.IngressTLS": {
         "description": "IngressTLS describes the transport layer security associated with an ingress.",
@@ -1708,14 +1735,16 @@
               "default": "",
               "nullable": true
             },
-            "x-kubernetes-list-type": "atomic"
+            "x-kubernetes-list-type": "atomic",
+            "nullable": true
           },
           "secretName": {
             "description": "secretName is the name of the secret used to terminate TLS traffic on port 443. Field is left optional to allow TLS routing based on SNI hostname alone. If the SNI host in a listener conflicts with the \"Host\" header field used by an IngressRule, the SNI host is used for termination and value of the \"Host\" header is used for routing.",
             "type": "string",
             "nullable": true
           }
-        }
+        },
+        "nullable": true
       },
       "io.k8s.api.networking.v1.NetworkPolicy": {
         "description": "NetworkPolicy describes what network traffic is allowed for a set of Pods",
@@ -1756,7 +1785,8 @@
             "kind": "NetworkPolicy",
             "version": "v1"
           }
-        ]
+        ],
+        "nullable": true
       },
       "io.k8s.api.networking.v1.NetworkPolicyEgressRule": {
         "description": "NetworkPolicyEgressRule describes a particular set of traffic that is allowed out of pods matched by a NetworkPolicySpec's podSelector. The traffic must match both ports and to. This type is beta-level in 1.8",
@@ -1773,7 +1803,8 @@
                 }
               ]
             },
-            "x-kubernetes-list-type": "atomic"
+            "x-kubernetes-list-type": "atomic",
+            "nullable": true
           },
           "to": {
             "description": "to is a list of destinations for outgoing traffic of pods selected for this rule. Items in this list are combined using a logical OR operation. If this field is empty or missing, this rule matches all destinations (traffic not restricted by destination). If this field is present and contains at least one item, this rule allows traffic only if the traffic matches at least one item in the to list.",
@@ -1786,9 +1817,11 @@
                 }
               ]
             },
-            "x-kubernetes-list-type": "atomic"
+            "x-kubernetes-list-type": "atomic",
+            "nullable": true
           }
-        }
+        },
+        "nullable": true
       },
       "io.k8s.api.networking.v1.NetworkPolicyIngressRule": {
         "description": "NetworkPolicyIngressRule describes a particular set of traffic that is allowed to the pods matched by a NetworkPolicySpec's podSelector. The traffic must match both ports and from.",
@@ -1805,7 +1838,8 @@
                 }
               ]
             },
-            "x-kubernetes-list-type": "atomic"
+            "x-kubernetes-list-type": "atomic",
+            "nullable": true
           },
           "ports": {
             "description": "ports is a list of ports which should be made accessible on the pods selected for this rule. Each item in this list is combined using a logical OR. If this field is empty or missing, this rule matches all ports (traffic not restricted by port). If this field is present and contains at least one item, then this rule allows traffic only if the traffic matches at least one port in the list.",
@@ -1818,9 +1852,11 @@
                 }
               ]
             },
-            "x-kubernetes-list-type": "atomic"
+            "x-kubernetes-list-type": "atomic",
+            "nullable": true
           }
-        }
+        },
+        "nullable": true
       },
       "io.k8s.api.networking.v1.NetworkPolicyList": {
         "description": "NetworkPolicyList is a list of NetworkPolicy objects.",
@@ -1844,7 +1880,8 @@
                   "$ref": "#/components/schemas/io.k8s.api.networking.v1.NetworkPolicy"
                 }
               ]
-            }
+            },
+            "nullable": true
           },
           "kind": {
             "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
@@ -1867,7 +1904,8 @@
             "kind": "NetworkPolicyList",
             "version": "v1"
           }
-        ]
+        ],
+        "nullable": true
       },
       "io.k8s.api.networking.v1.NetworkPolicyPeer": {
         "description": "NetworkPolicyPeer describes a peer to allow traffic to/from. Only certain combinations of fields are allowed",
@@ -1897,7 +1935,8 @@
               }
             ]
           }
-        }
+        },
+        "nullable": true
       },
       "io.k8s.api.networking.v1.NetworkPolicyPort": {
         "description": "NetworkPolicyPort describes a port to allow traffic on",
@@ -1906,7 +1945,8 @@
           "endPort": {
             "description": "endPort indicates that the range of ports from port to endPort if set, inclusive, should be allowed by the policy. This field cannot be defined if the port field is not defined or if the port field is defined as a named (string) port. The endPort must be equal or greater than port.",
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "port": {
             "description": "port represents the port on the given protocol. This can either be a numerical or named port on a pod. If this field is not provided, this matches all port names and numbers. If present, only traffic on the specified protocol AND port will be matched.",
@@ -1926,7 +1966,8 @@
             ],
             "nullable": true
           }
-        }
+        },
+        "nullable": true
       },
       "io.k8s.api.networking.v1.NetworkPolicySpec": {
         "description": "NetworkPolicySpec provides the specification of a NetworkPolicy",
@@ -1946,7 +1987,8 @@
                 }
               ]
             },
-            "x-kubernetes-list-type": "atomic"
+            "x-kubernetes-list-type": "atomic",
+            "nullable": true
           },
           "ingress": {
             "description": "ingress is a list of ingress rules to be applied to the selected pods. Traffic is allowed to a pod if there are no NetworkPolicies selecting the pod (and cluster policy otherwise allows the traffic), OR if the traffic source is the pod's local node, OR if the traffic matches at least one ingress rule across all of the NetworkPolicy objects whose podSelector matches the pod. If this field is empty then this NetworkPolicy does not allow any traffic (and serves solely to ensure that the pods it selects are isolated by default)",
@@ -1959,7 +2001,8 @@
                 }
               ]
             },
-            "x-kubernetes-list-type": "atomic"
+            "x-kubernetes-list-type": "atomic",
+            "nullable": true
           },
           "podSelector": {
             "description": "podSelector selects the pods to which this NetworkPolicy object applies. The array of ingress rules is applied to any pods selected by this field. Multiple network policies can select the same set of pods. In this case, the ingress rules for each are combined additively. This field is NOT optional and follows standard label selector semantics. An empty podSelector matches all pods in this namespace.",
@@ -1982,9 +2025,11 @@
               ],
               "nullable": true
             },
-            "x-kubernetes-list-type": "atomic"
+            "x-kubernetes-list-type": "atomic",
+            "nullable": true
           }
-        }
+        },
+        "nullable": true
       },
       "io.k8s.api.networking.v1.ServiceBackendPort": {
         "description": "ServiceBackendPort is the service port being referenced.",
@@ -1998,10 +2043,12 @@
           "number": {
             "description": "number is the numerical port number (e.g. 80) on the Service. This is a mutually exclusive setting with \"Name\".",
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           }
         },
-        "x-kubernetes-map-type": "atomic"
+        "x-kubernetes-map-type": "atomic",
+        "nullable": true
       },
       "io.k8s.apimachinery.pkg.apis.meta.v1.APIResource": {
         "description": "APIResource specifies the name of a resource and whether it is namespaced.",
@@ -2022,7 +2069,8 @@
               "default": "",
               "nullable": true
             },
-            "x-kubernetes-list-type": "atomic"
+            "x-kubernetes-list-type": "atomic",
+            "nullable": true
           },
           "group": {
             "description": "group is the preferred group of the resource.  Empty implies the group of the containing resource list. For subresources, this may have a different value, for example: Scale\".",
@@ -2044,7 +2092,8 @@
           "namespaced": {
             "description": "namespaced indicates if a resource is namespaced or not.",
             "type": "boolean",
-            "default": false
+            "default": false,
+            "nullable": true
           },
           "shortNames": {
             "description": "shortNames is a list of suggested short names of the resource.",
@@ -2054,7 +2103,8 @@
               "default": "",
               "nullable": true
             },
-            "x-kubernetes-list-type": "atomic"
+            "x-kubernetes-list-type": "atomic",
+            "nullable": true
           },
           "singularName": {
             "description": "singularName is the singular name of the resource.  This allows clients to handle plural and singular opaquely. The singularName is more correct for reporting status on a single item and both singular and plural are allowed from the kubectl CLI interface.",
@@ -2074,14 +2124,16 @@
               "type": "string",
               "default": "",
               "nullable": true
-            }
+            },
+            "nullable": true
           },
           "version": {
             "description": "version is the preferred version of the resource.  Empty implies the version of the containing resource list For subresources, this may have a different value, for example: v1 (while inside a v1beta1 version of the core resource's group)\".",
             "type": "string",
             "nullable": true
           }
-        }
+        },
+        "nullable": true
       },
       "io.k8s.apimachinery.pkg.apis.meta.v1.APIResourceList": {
         "description": "APIResourceList is a list of APIResource, it is used to expose the name of the resources supported in a specific group and version, and if the resource is namespaced.",
@@ -2118,7 +2170,8 @@
                 }
               ]
             },
-            "x-kubernetes-list-type": "atomic"
+            "x-kubernetes-list-type": "atomic",
+            "nullable": true
           }
         },
         "x-kubernetes-group-version-kind": [
@@ -2127,7 +2180,8 @@
             "kind": "APIResourceList",
             "version": "v1"
           }
-        ]
+        ],
+        "nullable": true
       },
       "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions": {
         "description": "DeleteOptions may be provided when deleting an API object.",
@@ -2146,16 +2200,19 @@
               "default": "",
               "nullable": true
             },
-            "x-kubernetes-list-type": "atomic"
+            "x-kubernetes-list-type": "atomic",
+            "nullable": true
           },
           "gracePeriodSeconds": {
             "description": "The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.",
             "type": "integer",
-            "format": "int64"
+            "format": "int64",
+            "nullable": true
           },
           "ignoreStoreReadErrorWithClusterBreakingPotential": {
             "description": "if set to true, it will trigger an unsafe deletion of the resource in case the normal deletion flow fails with a corrupt object error. A resource is considered corrupt if it can not be retrieved from the underlying storage successfully because of a) its data can not be transformed e.g. decryption failure, or b) it fails to decode into an object. NOTE: unsafe deletion ignores finalizer constraints, skips precondition checks, and removes the object from the storage. WARNING: This may potentially break the cluster if the workload associated with the resource being unsafe-deleted relies on normal deletion flow. Use only if you REALLY know what you are doing. The default value is false, and the user must opt in to enable it",
-            "type": "boolean"
+            "type": "boolean",
+            "nullable": true
           },
           "kind": {
             "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
@@ -2164,7 +2221,8 @@
           },
           "orphanDependents": {
             "description": "Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \"orphan\" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.",
-            "type": "boolean"
+            "type": "boolean",
+            "nullable": true
           },
           "preconditions": {
             "description": "Must be fulfilled before a deletion is carried out. If not possible, a 409 Conflict status will be returned.",
@@ -2486,11 +2544,13 @@
             "kind": "DeleteOptions",
             "version": "v1alpha1"
           }
-        ]
+        ],
+        "nullable": true
       },
       "io.k8s.apimachinery.pkg.apis.meta.v1.FieldsV1": {
         "description": "FieldsV1 stores a set of fields in a data structure like a Trie, in JSON format.\n\nEach key is either a '.' representing the field itself, and will always map to an empty set, or a string representing a sub-field or item. The string will follow one of these four formats: 'f:<name>', where <name> is the name of a field in a struct, or key in a map 'v:<value>', where <value> is the exact json formatted value of a list item 'i:<index>', where <index> is position of a item in a list 'k:<keys>', where <keys> is a map of  a list item's key fields to their unique values If a key maps to an empty Fields value, the field that key represents is part of the set.\n\nThe exact format is defined in sigs.k8s.io/structured-merge-diff",
-        "type": "object"
+        "type": "object",
+        "nullable": true
       },
       "io.k8s.apimachinery.pkg.apis.meta.v1.LabelSelector": {
         "description": "A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all objects. A null label selector matches no objects.",
@@ -2507,7 +2567,8 @@
                 }
               ]
             },
-            "x-kubernetes-list-type": "atomic"
+            "x-kubernetes-list-type": "atomic",
+            "nullable": true
           },
           "matchLabels": {
             "description": "matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is \"key\", the operator is \"In\", and the values array contains only \"value\". The requirements are ANDed.",
@@ -2516,10 +2577,12 @@
               "type": "string",
               "default": "",
               "nullable": true
-            }
+            },
+            "nullable": true
           }
         },
-        "x-kubernetes-map-type": "atomic"
+        "x-kubernetes-map-type": "atomic",
+        "nullable": true
       },
       "io.k8s.apimachinery.pkg.apis.meta.v1.LabelSelectorRequirement": {
         "description": "A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.",
@@ -2549,9 +2612,11 @@
               "default": "",
               "nullable": true
             },
-            "x-kubernetes-list-type": "atomic"
+            "x-kubernetes-list-type": "atomic",
+            "nullable": true
           }
-        }
+        },
+        "nullable": true
       },
       "io.k8s.apimachinery.pkg.apis.meta.v1.ListMeta": {
         "description": "ListMeta describes metadata that synthetic resources must have, including lists and various status objects. A resource may have only one of {ObjectMeta, ListMeta}.",
@@ -2565,7 +2630,8 @@
           "remainingItemCount": {
             "description": "remainingItemCount is the number of subsequent items in the list which are not included in this list response. If the list request contained label or field selectors, then the number of remaining items is unknown and the field will be left unset and omitted during serialization. If the list is complete (either because it is not chunking or because this is the last chunk), then there are no more remaining items and this field will be left unset and omitted during serialization. Servers older than v1.15 do not set this field. The intended use of the remainingItemCount is *estimating* the size of a collection. Clients should not rely on the remainingItemCount to be set or to be exact.",
             "type": "integer",
-            "format": "int64"
+            "format": "int64",
+            "nullable": true
           },
           "resourceVersion": {
             "description": "String that identifies the server's internal version of this object that can be used by clients to determine when objects have changed. Value must be treated as opaque by clients and passed unmodified back to the server. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency",
@@ -2577,7 +2643,8 @@
             "type": "string",
             "nullable": true
           }
-        }
+        },
+        "nullable": true
       },
       "io.k8s.apimachinery.pkg.apis.meta.v1.ManagedFieldsEntry": {
         "description": "ManagedFieldsEntry is a workflow-id, a FieldSet and the group version of the resource that the fieldset applies to.",
@@ -2624,7 +2691,8 @@
               }
             ]
           }
-        }
+        },
+        "nullable": true
       },
       "io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta": {
         "description": "ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.",
@@ -2637,7 +2705,8 @@
               "type": "string",
               "default": "",
               "nullable": true
-            }
+            },
+            "nullable": true
           },
           "creationTimestamp": {
             "description": "CreationTimestamp is a timestamp representing the server time when this object was created. It is not guaranteed to be set in happens-before order across separate operations. Clients may not set this value. It is represented in RFC3339 form and is in UTC.\n\nPopulated by the system. Read-only. Null for lists. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata",
@@ -2650,7 +2719,8 @@
           "deletionGracePeriodSeconds": {
             "description": "Number of seconds allowed for this object to gracefully terminate before it will be removed from the system. Only set when deletionTimestamp is also set. May only be shortened. Read-only.",
             "type": "integer",
-            "format": "int64"
+            "format": "int64",
+            "nullable": true
           },
           "deletionTimestamp": {
             "description": "DeletionTimestamp is RFC 3339 date and time at which this resource will be deleted. This field is set by the server when a graceful deletion is requested by the user, and is not directly settable by a client. The resource is expected to be deleted (no longer visible from resource lists, and not reachable by name) after the time in this field, once the finalizers list is empty. As long as the finalizers list contains items, deletion is blocked. Once the deletionTimestamp is set, this value may not be unset or be set further into the future, although it may be shortened or the resource may be deleted prior to this time. For example, a user may request that a pod is deleted in 30 seconds. The Kubelet will react by sending a graceful termination signal to the containers in the pod. After that 30 seconds, the Kubelet will send a hard termination signal (SIGKILL) to the container and after cleanup, remove the pod from the API. In the presence of network partitions, this object may still exist after this timestamp, until an administrator or automated process can determine the resource is fully terminated. If not set, graceful deletion of the object has not been requested.\n\nPopulated by the system when a graceful deletion is requested. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata",
@@ -2669,7 +2739,8 @@
               "nullable": true
             },
             "x-kubernetes-list-type": "set",
-            "x-kubernetes-patch-strategy": "merge"
+            "x-kubernetes-patch-strategy": "merge",
+            "nullable": true
           },
           "generateName": {
             "description": "GenerateName is an optional prefix, used by the server, to generate a unique name ONLY IF the Name field has not been provided. If this field is used, the name returned to the client will be different than the name passed. This value will also be combined with a unique suffix. The provided value has the same validation rules as the Name field, and may be truncated by the length of the suffix required to make the value unique on the server.\n\nIf this field is specified and the generated name exists, the server will return a 409.\n\nApplied only if Name is not specified. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency",
@@ -2679,7 +2750,8 @@
           "generation": {
             "description": "A sequence number representing a specific generation of the desired state. Populated by the system. Read-only.",
             "type": "integer",
-            "format": "int64"
+            "format": "int64",
+            "nullable": true
           },
           "labels": {
             "description": "Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels",
@@ -2688,7 +2760,8 @@
               "type": "string",
               "default": "",
               "nullable": true
-            }
+            },
+            "nullable": true
           },
           "managedFields": {
             "description": "ManagedFields maps workflow-id and version to the set of fields that are managed by that workflow. This is mostly for internal housekeeping, and users typically shouldn't need to set or understand this field. A workflow can be the user's name, a controller's name, or the name of a specific apply path like \"ci-cd\". The set of fields is always in the version that the workflow used when modifying the object.",
@@ -2701,7 +2774,8 @@
                 }
               ]
             },
-            "x-kubernetes-list-type": "atomic"
+            "x-kubernetes-list-type": "atomic",
+            "nullable": true
           },
           "name": {
             "description": "Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names",
@@ -2729,7 +2803,8 @@
             ],
             "x-kubernetes-list-type": "map",
             "x-kubernetes-patch-merge-key": "uid",
-            "x-kubernetes-patch-strategy": "merge"
+            "x-kubernetes-patch-strategy": "merge",
+            "nullable": true
           },
           "resourceVersion": {
             "description": "An opaque value that represents the internal version of this object that can be used by clients to determine when objects have changed. May be used for optimistic concurrency, change detection, and the watch operation on a resource or set of resources. Clients must treat these values as opaque and passed unmodified back to the server. They may only be valid for a particular resource or set of resources.\n\nPopulated by the system. Read-only. Value must be treated as opaque by clients and . More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency",
@@ -2746,7 +2821,8 @@
             "type": "string",
             "nullable": true
           }
-        }
+        },
+        "nullable": true
       },
       "io.k8s.apimachinery.pkg.apis.meta.v1.OwnerReference": {
         "description": "OwnerReference contains enough information to let you identify an owning object. An owning object must be in the same namespace as the dependent, or be cluster-scoped, so there is no namespace field.",
@@ -2766,11 +2842,13 @@
           },
           "blockOwnerDeletion": {
             "description": "If true, AND if the owner has the \"foregroundDeletion\" finalizer, then the owner cannot be deleted from the key-value store until this reference is removed. See https://kubernetes.io/docs/concepts/architecture/garbage-collection/#foreground-deletion for how the garbage collector interacts with this field and enforces the foreground deletion. Defaults to false. To set this field, a user needs \"delete\" permission of the owner, otherwise 422 (Unprocessable Entity) will be returned.",
-            "type": "boolean"
+            "type": "boolean",
+            "nullable": true
           },
           "controller": {
             "description": "If true, this reference points to the managing controller.",
-            "type": "boolean"
+            "type": "boolean",
+            "nullable": true
           },
           "kind": {
             "description": "Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
@@ -2791,11 +2869,13 @@
             "nullable": true
           }
         },
-        "x-kubernetes-map-type": "atomic"
+        "x-kubernetes-map-type": "atomic",
+        "nullable": true
       },
       "io.k8s.apimachinery.pkg.apis.meta.v1.Patch": {
         "description": "Patch is provided to give a concrete name and type to the Kubernetes PATCH request body.",
-        "type": "object"
+        "type": "object",
+        "nullable": true
       },
       "io.k8s.apimachinery.pkg.apis.meta.v1.Preconditions": {
         "description": "Preconditions must be fulfilled before an operation (update, delete, etc.) is carried out.",
@@ -2811,7 +2891,8 @@
             "type": "string",
             "nullable": true
           }
-        }
+        },
+        "nullable": true
       },
       "io.k8s.apimachinery.pkg.apis.meta.v1.Status": {
         "description": "Status is a return value for calls that don't return other objects.",
@@ -2825,7 +2906,8 @@
           "code": {
             "description": "Suggested HTTP return code for this status, 0 if not set.",
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "details": {
             "description": "Extended data associated with the reason.  Each reason may define its own extended details. This field is optional and the data returned is not guaranteed to conform to any schema except that defined by the reason type.",
@@ -2872,7 +2954,8 @@
             "kind": "Status",
             "version": "v1"
           }
-        ]
+        ],
+        "nullable": true
       },
       "io.k8s.apimachinery.pkg.apis.meta.v1.StatusCause": {
         "description": "StatusCause provides more information about an api.Status failure, including cases when multiple errors are encountered.",
@@ -2893,7 +2976,8 @@
             "type": "string",
             "nullable": true
           }
-        }
+        },
+        "nullable": true
       },
       "io.k8s.apimachinery.pkg.apis.meta.v1.StatusDetails": {
         "description": "StatusDetails is a set of additional properties that MAY be set by the server to provide additional information about a response. The Reason field of a Status object defines what attributes will be set. Clients must ignore fields that do not match the defined type of each attribute, and should assume that any attribute may be empty, invalid, or under defined.",
@@ -2910,7 +2994,8 @@
                 }
               ]
             },
-            "x-kubernetes-list-type": "atomic"
+            "x-kubernetes-list-type": "atomic",
+            "nullable": true
           },
           "group": {
             "description": "The group attribute of the resource associated with the status StatusReason.",
@@ -2930,14 +3015,16 @@
           "retryAfterSeconds": {
             "description": "If specified, the time in seconds before the operation should be retried. Some errors may indicate the client must take an alternate action - for those errors this field may indicate how long to wait before taking the alternate action.",
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "uid": {
             "description": "UID of the resource. (when there is a single resource which can be described). More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids",
             "type": "string",
             "nullable": true
           }
-        }
+        },
+        "nullable": true
       },
       "io.k8s.apimachinery.pkg.apis.meta.v1.Time": {
         "description": "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.",
@@ -3273,18 +3360,21 @@
             "kind": "WatchEvent",
             "version": "v1alpha1"
           }
-        ]
+        ],
+        "nullable": true
       },
       "io.k8s.apimachinery.pkg.runtime.RawExtension": {
         "description": "RawExtension is used to hold extensions in external versions.\n\nTo use this, make a field which has RawExtension as its type in your external, versioned struct, and Object in your internal struct. You also need to register your various plugin types.\n\n// Internal package:\n\n\ttype MyAPIObject struct {\n\t\truntime.TypeMeta `json:\",inline\"`\n\t\tMyPlugin runtime.Object `json:\"myPlugin\"`\n\t}\n\n\ttype PluginA struct {\n\t\tAOption string `json:\"aOption\"`\n\t}\n\n// External package:\n\n\ttype MyAPIObject struct {\n\t\truntime.TypeMeta `json:\",inline\"`\n\t\tMyPlugin runtime.RawExtension `json:\"myPlugin\"`\n\t}\n\n\ttype PluginA struct {\n\t\tAOption string `json:\"aOption\"`\n\t}\n\n// On the wire, the JSON will look something like this:\n\n\t{\n\t\t\"kind\":\"MyAPIObject\",\n\t\t\"apiVersion\":\"v1\",\n\t\t\"myPlugin\": {\n\t\t\t\"kind\":\"PluginA\",\n\t\t\t\"aOption\":\"foo\",\n\t\t},\n\t}\n\nSo what happens? Decode first uses json or yaml to unmarshal the serialized data into your external MyAPIObject. That causes the raw JSON to be stored, but not unpacked. The next step is to copy (using pkg/conversion) into the internal struct. The runtime package's DefaultScheme has conversion functions installed which will unpack the JSON stored in RawExtension, turning it into the correct object type, and storing it in the Object. (TODO: In the case where the object is of an unknown type, a runtime.Unknown object will be created and stored.)",
-        "type": "object"
+        "type": "object",
+        "nullable": true
       },
       "io.k8s.apimachinery.pkg.util.intstr.IntOrString": {
         "description": "IntOrString is a type that can hold an int32 or a string.  When used in JSON or YAML marshalling and unmarshalling, it produces or consumes the inner type.  This allows you to have, for example, a JSON field that can accept a name or number.",
         "format": "int-or-string",
         "oneOf": [
           {
-            "type": "integer"
+            "type": "integer",
+            "nullable": true
           },
           {
             "type": "string",

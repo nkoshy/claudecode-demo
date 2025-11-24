@@ -13,7 +13,7 @@ Usage:
       --spec networking-v1-openapi.json \
       --output-dir fastmcp-fixed-specs
 
-  Optional: --aggressive to make all string fields nullable
+  Optional: --aggressive to make ALL fields nullable (strings, integers, booleans, objects, arrays)
 """
 
 import argparse
@@ -95,11 +95,15 @@ def fix_type_array_to_nullable(schema: Json, path: str = "", aggressive: bool = 
                 log(f"[FIX] {path}: unwrapped single-element type array {type_val}")
                 fixes += 1
 
-    # Aggressive mode: make all string fields nullable
-    if aggressive and "type" in schema and schema["type"] == "string" and not schema.get("nullable"):
-        schema["nullable"] = True
-        log(f"[FIX] {path}: made string field nullable (aggressive mode)")
-        fixes += 1
+    # Aggressive mode: make ALL typed fields nullable (not just strings)
+    # Kubernetes can return null for any field: strings, integers, booleans, objects, arrays, numbers
+    if aggressive and "type" in schema and not schema.get("nullable"):
+        field_type = schema["type"]
+        # Only add nullable if it's a simple type (not already an array/object with complex validation)
+        if isinstance(field_type, str):
+            schema["nullable"] = True
+            log(f"[FIX] {path}: made {field_type} field nullable (aggressive mode)")
+            fixes += 1
 
     # Recurse into common schema locations
     if "properties" in schema:
@@ -231,7 +235,7 @@ def main():
     parser.add_argument(
         "--aggressive",
         action="store_true",
-        help="Make ALL string fields nullable (recommended for K8s which can return null for any field)",
+        help="Make ALL fields nullable - strings, integers, booleans, objects, arrays (recommended for K8s which can return null for any field)",
     )
 
     args = parser.parse_args()
