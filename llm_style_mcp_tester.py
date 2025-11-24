@@ -28,7 +28,7 @@ class MCPToolTester:
         self.test_results = []
 
     async def send_request(self, method: str, params: dict = None):
-        """Send JSON-RPC request to MCP server."""
+        """Send JSON-RPC request to MCP server (SSE transport)."""
         self.request_id += 1
         message = {
             "jsonrpc": "2.0",
@@ -46,6 +46,22 @@ class MCPToolTester:
             }
         )
         response.raise_for_status()
+
+        # Parse SSE response
+        # SSE format: "event: message\ndata: {...}\n\n"
+        response_text = response.text.strip()
+
+        # Handle SSE stream format
+        if response_text.startswith("event:") or "data:" in response_text:
+            # Parse SSE events
+            lines = response_text.split('\n')
+            for i, line in enumerate(lines):
+                if line.startswith('data:'):
+                    data_json = line[5:].strip()  # Remove 'data:' prefix
+                    if data_json:
+                        return json.loads(data_json)
+
+        # Fallback to plain JSON
         return response.json()
 
     async def initialize(self):
