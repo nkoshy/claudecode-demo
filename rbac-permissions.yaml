@@ -1,0 +1,38 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: devsa-schema-validator
+  namespace: devnamespace
+rules:
+- apiGroups: [""]
+  resources:
+    - pods
+    - services
+    - configmaps
+    - secrets
+  verbs: ["get", "list"]
+- apiGroups: ["apps"]
+  resources:
+    - deployments
+    - replicasets
+    - statefulsets
+    - daemonsets
+  verbs: ["get", "list"]
+- apiGroups: ["networking.k8s.io"]
+  resources:
+    - ingresses
+  verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: devsa-schema-validator-binding
+  namespace: devnamespace
+subjects:
+- kind: ServiceAccount
+  name: devsa
+  namespace: devnamespace
+roleRef:
+  kind: Role
+  name: devsa-schema-validator
+  apiGroup: rbac.authorization.k8s.io

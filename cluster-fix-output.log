@@ -1,0 +1,31 @@
+/home/user/claudecode-demo/k8s_openapi_auto_fix.py:34: DeprecationWarning: jsonschema.RefResolver is deprecated as of v4.18.0, in favor of the https://github.com/python-jsonschema/referencing library, which provides more compliant referencing behavior as well as more flexible APIs for customization. A future release will remove RefResolver. Please file a feature request (on referencing) if you are missing an API for the kind of customization you need.
+  from jsonschema import Draft202012Validator, RefResolver, ValidationError
+Loaded spec core-v1-openapi.json
+Loaded spec apps-v1-openapi.json
+Loaded spec networking-v1-openapi.json
+Spec core-v1-openapi.json: collected 66 operations on target paths
+Spec apps-v1-openapi.json: collected 49 operations on target paths
+Spec networking-v1-openapi.json: collected 10 operations on target paths
+Found 9 list-level GET operations
+GET https://devtest-dns-6fbggdfo.hcp.eastus2.azmk8s.io/api/v1/namespaces/devnamespace/configmaps -> 403
+[core-v1-openapi.json GET /api/v1/namespaces/{namespace}/configmaps] HTTP 403, no body to validate
+GET https://devtest-dns-6fbggdfo.hcp.eastus2.azmk8s.io/api/v1/namespaces/devnamespace/pods -> 403
+[core-v1-openapi.json GET /api/v1/namespaces/{namespace}/pods] HTTP 403, no body to validate
+GET https://devtest-dns-6fbggdfo.hcp.eastus2.azmk8s.io/api/v1/namespaces/devnamespace/secrets -> 403
+[core-v1-openapi.json GET /api/v1/namespaces/{namespace}/secrets] HTTP 403, no body to validate
+GET https://devtest-dns-6fbggdfo.hcp.eastus2.azmk8s.io/api/v1/namespaces/devnamespace/services -> 403
+[core-v1-openapi.json GET /api/v1/namespaces/{namespace}/services] HTTP 403, no body to validate
+GET https://devtest-dns-6fbggdfo.hcp.eastus2.azmk8s.io/apis/apps/v1/namespaces/devnamespace/daemonsets -> 403
+[apps-v1-openapi.json GET /apis/apps/v1/namespaces/{namespace}/daemonsets] HTTP 403, no body to validate
+GET https://devtest-dns-6fbggdfo.hcp.eastus2.azmk8s.io/apis/apps/v1/namespaces/devnamespace/deployments -> 403
+[apps-v1-openapi.json GET /apis/apps/v1/namespaces/{namespace}/deployments] HTTP 403, no body to validate
+GET https://devtest-dns-6fbggdfo.hcp.eastus2.azmk8s.io/apis/apps/v1/namespaces/devnamespace/replicasets -> 403
+[apps-v1-openapi.json GET /apis/apps/v1/namespaces/{namespace}/replicasets] HTTP 403, no body to validate
+GET https://devtest-dns-6fbggdfo.hcp.eastus2.azmk8s.io/apis/apps/v1/namespaces/devnamespace/statefulsets -> 403
+[apps-v1-openapi.json GET /apis/apps/v1/namespaces/{namespace}/statefulsets] HTTP 403, no body to validate
+GET https://devtest-dns-6fbggdfo.hcp.eastus2.azmk8s.io/apis/networking.k8s.io/v1/namespaces/devnamespace/ingresses -> 403
+[networking-v1-openapi.json GET /apis/networking.k8s.io/v1/namespaces/{namespace}/ingresses] HTTP 403, no body to validate
+Validation complete. Total schema errors observed: 0
+Wrote patched spec: cluster-fixed-specs/core-v1-openapi.json
+Wrote patched spec: cluster-fixed-specs/apps-v1-openapi.json
+Wrote patched spec: cluster-fixed-specs/networking-v1-openapi.json
