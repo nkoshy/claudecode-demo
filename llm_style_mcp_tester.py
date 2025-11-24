@@ -422,6 +422,10 @@ class MCPToolTester:
                         })
                     else:
                         print(f"   ⚠️  Unexpected response format")
+                        print(f"       Type: {type(result)}")
+                        print(f"       Content: {str(result)[:200]}")
+                        if isinstance(result, dict):
+                            print(f"       Keys: {list(result.keys())}")
                         self.test_results.append({
                             "resource": resource_type,
                             "operation": "list",
