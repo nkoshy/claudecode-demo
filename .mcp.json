@@ -2,7 +2,10 @@
   "mcpServers": {
     "k8s-mcp": {
       "type": "http",
-      "url": "https://k8smcp.k8smcp.cloud/mcp"
+      "url": "https://k8smcp.k8smcp.cloud/mcp",
+      "headers": {
+        "Accept": "application/json, text/event-stream"
+      }
     }
   }
 }

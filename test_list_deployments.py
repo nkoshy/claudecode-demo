@@ -21,7 +21,7 @@ async def list_deployments(namespace: str):
             json=message,
             headers={
                 "Content-Type": "application/json",
-                "Accept": "application/json"
+                "Accept": "application/json, text/event-stream"
             }
         )
         response.raise_for_status()
